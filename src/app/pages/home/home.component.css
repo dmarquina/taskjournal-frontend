@@ -5,6 +5,8 @@
   }
   
   .header {
+    padding-left: 1rem;
+    padding-right: 1rem;
     background-image: linear-gradient(
       224deg,
       hsl(240deg 100% 50%) 2%,
@@ -26,6 +28,8 @@
   }
   
   .todoapp-wrapper {
+    margin-left: 1rem;
+    margin-right: 1rem;
     position: relative;
     top: -40px;
     background: #fff;
@@ -86,6 +90,7 @@
   }
   
   .new-todo {
+    margin-top: 1rem;
     padding: 2rem;
     height: 65px;
     border: none;

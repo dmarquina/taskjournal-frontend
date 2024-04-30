@@ -14,4 +14,26 @@ export class LabsComponent {
     'Crear componente',
     'Escribir cualquier cosa'
   ]
+  person = {
+    name : "Diego",
+    age : 31
+
+  }
+
+  clickHandler() {
+    alert('Holi');
+  }
+
+  dblClickHandler() {
+    alert('Holi2');
+  }
+
+  changeHandler(event: Event) {
+    console.log(event);
+  }
+
+  keydownHandler(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    console.log(input.value);
+  }
 }
