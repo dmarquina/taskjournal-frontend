@@ -11,9 +11,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'taskjournal-frontend';
-  tasks = [
-    'Crear proyecto',
-    'Crear componente',
-    'Escribir cualquier cosa'
-  ]
+
 }
