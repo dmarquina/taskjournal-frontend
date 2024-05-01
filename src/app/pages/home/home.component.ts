@@ -1,7 +1,8 @@
-import { Component, signal} from '@angular/core';
+import { Component, inject, signal} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import {Task} from './../../model/task.model';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-home',
@@ -12,25 +13,20 @@ import {Task} from './../../model/task.model';
 })
 export class HomeComponent {
 
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: 'Crear proyecto',
-      isCompleted: false
-    },
-    
-    {
-      id: Date.now(),
-      title: 'Crear componente',
-      isCompleted: true
-    },
-    
-    {
-      id: Date.now(),
-      title: 'Escribir cualquier cosa',
-      isCompleted: false
-    }
-  ])
+  private taskService = inject(TaskService);
+
+  tasks = signal<Task[]>([]);
+
+  ngOnInit() {
+    this.taskService.getTasks().subscribe({
+      next: (tasks) => {
+        this.tasks.set(tasks)
+      },
+      error: () => {
+      }
+    })
+  }
+
 
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
@@ -52,10 +48,10 @@ export class HomeComponent {
     
   }
 
-  addTask(title: string) {
+  addTask(name: string) {
     const newTask = {
       id: Date.now(),
-      title: title,
+      name: name,
       isCompleted: false
     }
     this.tasks.update((tasks) => [...tasks, newTask]);
