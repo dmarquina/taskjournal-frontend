@@ -1,13 +1,13 @@
-import { Component, inject, signal} from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import {Task} from './../../model/task.model';
+import { Task } from './../../model/task.model';
 import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -18,13 +18,7 @@ export class HomeComponent {
   tasks = signal<Task[]>([]);
 
   ngOnInit() {
-    this.taskService.getTasks().subscribe({
-      next: (tasks) => {
-        this.tasks.set(tasks)
-      },
-      error: () => {
-      }
-    })
+    this.getTasks();
   }
 
 
@@ -39,44 +33,64 @@ export class HomeComponent {
 
 
   changeHandler() {
-    if(this.newTaskCtrl.valid) {
+    if (this.newTaskCtrl.valid) {
       this.addTask(this.newTaskCtrl.value);
       this.newTaskCtrl.setValue('');
     } else {
       console.log("no es valido")
     }
-    
+
   }
 
   addTask(name: string) {
-    const newTask = {
-      id: Date.now(),
+    const createTaskRequest = {
+      userId: 1,
       name: name,
-      isCompleted: false
     }
-    this.tasks.update((tasks) => [...tasks, newTask]);
-  }
-  
-  updateTask(index: number) {
-    console.log(index);
-    this.tasks.update(prevState  => {
-      return prevState.map((task, position) => {
-        if (position === index) {
-          console.log(task);
-          return {
-            ...task,
-            isCompleted: !task.isCompleted
-          }
-        }
-        return task;
-      })
+    this.taskService.createTask(createTaskRequest).subscribe({
+      next: (tasks) => {
+        this.tasks.set(tasks)
+      },
+      error: () => { console.log("Error en updateTask") }
     });
   }
 
-  deleteTask(index: number): void {
-    this.tasks.update((tasks) => {
-      tasks.splice(index, 1);
-      return tasks;
-    });
+  updateTask(taskId: number, currentPos: number) {
+    this.taskService.updateTaskStatus(taskId).subscribe({
+      next: () => {
+        this.tasks.update(prevState => {
+          return prevState.map((task, position) => {
+            if (position === currentPos) {
+              return {
+                ...task,
+                completed: !task.completed
+              }
+            }
+            return task;
+          })
+        });
+      },
+      error: () => { console.log("Error en updateTask") }
+    })
+
+  }
+
+  deleteTask(taskId: number, index: number): void {
+    this.taskService.deleteTask(taskId).subscribe({
+      next: () => this.tasks.update((tasks) => {
+        tasks.splice(index, 1);
+        return tasks;
+      }),
+      error: () => { console.log("Error en deleteTask()")}
+    })
+  }
+
+  private getTasks() {
+    this.taskService.getTasks().subscribe({
+      next: (tasks) => {
+        this.tasks.set(tasks)
+      },
+      error: () => { console.log("Error en updateTask") }
+    })
   }
 }

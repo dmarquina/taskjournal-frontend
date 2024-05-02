@@ -16,4 +16,16 @@ export class TaskService {
   getTasks() {
     return this.http.get<Task[]>('http://localhost:8080/users/1/tasks');
   }
+
+  createTask(createTaskRequest: Object) {
+    return this.http.post<Task[]>('http://localhost:8080/tasks/', createTaskRequest);
+  }
+
+  updateTaskStatus(taskId: number) {
+    return this.http.patch<Task>('http://localhost:8080/tasks/' + taskId,{});
+  }
+
+  deleteTask(taskId: number) {
+    return this.http.delete('http://localhost:8080/tasks/' + taskId,{});
+  }
 }

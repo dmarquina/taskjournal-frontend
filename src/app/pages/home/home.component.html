@@ -9,14 +9,17 @@
   <div class="container todoapp-wrapper">
     <section class="main">
       <ul class="todo-list" *ngFor="let task of tasks() index as i">
-        <li [class.completed]="task.isCompleted">
+        <li [class.completed]="task.completed">
           <div class="view">
-            <input class="toggle" type="checkbox" [checked]="task.isCompleted" (change)="updateTask(i)" />
+            <input class="toggle" type="checkbox" [checked]="task.completed" (change)="updateTask(task.taskId, i)" />
             <label>{{task.name}}</label>
-            <button class="destroy" (click)="deleteTask(i)"></button>
+            <button class="destroy" (click)="deleteTask(task.taskId, i)"></button>
           </div>
         </li>
       </ul>
     </section>
+  </div>
+  <div>
+    <button name="button" >CERRAR DÍA</button>
   </div>
 </section>
