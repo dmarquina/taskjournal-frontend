@@ -4,7 +4,25 @@ body {
   padding: 0;
 }
 
-button {
+body {
+  font-family: "Roboto", sans-serif;
+  background: #f5f5f5;
+  color: #111111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 300;
+}
+
+:focus {
+  outline: 0;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.btn-delete {
   margin: 0;
   padding: 0;
   border: 0;
@@ -18,17 +36,4 @@ button {
   appearance: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-body {
-  font-family: "Roboto", sans-serif;
-  background: #f5f5f5;
-  color: #111111;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-weight: 300;
-}
-
-:focus {
-  outline: 0;
 }
