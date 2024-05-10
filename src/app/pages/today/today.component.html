@@ -1,8 +1,10 @@
 <section class="todoapp">
   <header class="header">
     <div class="container">
-      <h1>Hoy</h1>
-      <input class="new-todo" placeholder="Nombre de la tarea" autofocus type="text" [formControl]="newTaskCtrl"
+      <div class="mt-10">
+        <app-calendar></app-calendar>
+      </div>
+      <input class="new-todo rounded-full" placeholder="Nombre de la tarea" autofocus type="text" [formControl]="newTaskCtrl"
         (keydown.enter)="changeHandler()" />
     </div>
   </header>
@@ -22,6 +24,6 @@
 
 </section>
 <div class="flex flex-row justify-center">
-  <button class="basis-1/2 bg-transparent hover:bg-cyan-500 text-cyan-700 font-semibold hover:text-white py-2 px-4 border border-cyan-500 hover:border-transparent rounded">
+  <button (click)="prepararNavegacion()" class="basis-1/2 bg-transparent hover:bg-cyan-500 text-cyan-700 font-semibold hover:text-white py-2 px-4 border border-cyan-500 hover:border-transparent rounded">
     CERRAR DIA</button>
 </div>

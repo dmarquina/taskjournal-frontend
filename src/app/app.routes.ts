@@ -1,15 +1,16 @@
 import { Routes } from '@angular/router';
 
-import {HomeComponent} from './pages/home/home.component';
-import {LabsComponent} from './pages/labs/labs.component';
+import {TodayComponent} from './pages/today/today.component';
+import {CalendarComponent} from './pages/calendar/calendar.component';
+import {EntryComponent} from './pages/entry/entry.component';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent
+        component: TodayComponent
     },
     {
-        path: 'labs',
-        component: LabsComponent
+        path: 'create-entry',
+        component: EntryComponent
     }
 ];
