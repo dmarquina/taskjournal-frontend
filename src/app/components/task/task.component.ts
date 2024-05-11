@@ -4,18 +4,18 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
-import { CalendarComponent } from '../calendar/calendar.component';
 
 
 @Component({
-  selector: 'app-today',
-  standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, CalendarComponent],
-  templateUrl: './today.component.html',
-  styleUrl: './today.component.css'
+    selector: 'app-task',
+    standalone: true,
+    styleUrl: './task.component.css',
+    templateUrl: './task.component.html',
+    imports: [ReactiveFormsModule, CommonModule]
 })
 
-export class TodayComponent {
+export class TaskComponent {
+
 
   private taskService = inject(TaskService);
 
@@ -100,9 +100,4 @@ export class TodayComponent {
   }
 
   
-  prepararNavegacion() {
-    //TODO: Llamar a generador de entrada
-    const datos = { entryId: 1, content: "23 de agosto de 2021\n\nHoy ha sido un día bastante movido, pero también productivo. Empecé la mañana yendo al entrenamiento, seguido de un delicioso desayuno de pan con jamonada y queso acompañado de un vaso de milo. Después de tanto ejercicio, decidí tomar una siesta para recuperar un poco de sueño.\n\nLuego me puse a estudiar para la entrevista con Encora, la cual tuve más tarde. La entrevista fue bastante bien y después de almorzar, me relajé viendo 2 capítulos de 2 Broke Girls. \n\nDespués de un pequeño descanso, decidí jugar un par de partidas de Dota para despejar la mente. Posteriormente, avancé un poco en mi TaskJournal para mantenerme organizado.\n\nAunque no logré completar la tarea de leer 5 páginas de Xueños, siento que el día fue bastante productivo y estoy contento con todo lo que logré. ¡Mañana será otro día para intentarlo de nuevo!" };
-    this.router.navigate(['/create-entry'], {state: datos});
-  }
 }
