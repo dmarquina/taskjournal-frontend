@@ -5,12 +5,18 @@
 <section>
     <mat-tab-group >
         <mat-tab label="Tareas" >
-            <div class="mt-5">
-            <app-tasklist></app-tasklist>
-        </div>
-        </mat-tab>
-        <mat-tab label="Diario">
+            <ng-template mat-tab-label>
+                <mat-icon class="taskjournal-tab-icon">checklist</mat-icon>
+                Tareas
+            </ng-template>
             <app-journal></app-journal>            
+        </mat-tab>
+        <mat-tab label="Diario" selected>
+            <ng-template mat-tab-label>
+                <mat-icon class="taskjournal-tab-icon">menu_book</mat-icon>
+                Diario
+            </ng-template>
+            <app-tasklist></app-tasklist>
         </mat-tab>
     </mat-tab-group>
 </section>
