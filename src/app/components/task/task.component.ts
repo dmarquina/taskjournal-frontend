@@ -1,10 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, Input, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../services/task.service';
-import { Router } from '@angular/router';
-
 
 @Component({
     selector: 'app-task',
@@ -16,17 +14,10 @@ import { Router } from '@angular/router';
 
 export class TaskComponent {
 
-
+  @Input({required: true}) tasks = signal<Task[]>([]);
+  
   private taskService = inject(TaskService);
-
-  tasks = signal<Task[]>([]);
-
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-    this.getTasks();
-  }
-
+  
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
     validators: [
@@ -87,15 +78,6 @@ export class TaskComponent {
         return tasks;
       }),
       error: () => { console.log("Error en deleteTask()")}
-    })
-  }
-
-  private getTasks() {
-    this.taskService.getTasks().subscribe({
-      next: (tasks) => {
-        this.tasks.set(tasks)
-      },
-      error: () => { console.log("Error en updateTask") }
     })
   }
 

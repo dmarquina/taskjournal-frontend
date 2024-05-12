@@ -4,6 +4,7 @@ import { JournalComponent } from "../journal/journal.component";
 import { CalendarComponent } from "../../components/shared/calendar/calendar.component";
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
+import { Entry } from '../../model/entry.model';
 
 @Component({
     selector: 'app-taskjournal',
@@ -13,5 +14,12 @@ import {MatIconModule} from '@angular/material/icon';
     imports: [TaskListComponent, JournalComponent, CalendarComponent,MatTabsModule,MatIconModule]
 })
 export class TaskJournalComponent {
+    
+    entryForJournal?: Entry;
+    selectedTab=0;
 
+    createEntryProcess(entry: Entry) {
+        this.selectedTab=1;
+        this.entryForJournal = entry;
+    }
 }

@@ -1,28 +1,38 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, LOCALE_ID , Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute } from '@angular/router';
 import { ActionButtonComponent } from "../shared/actionbutton/actionbutton.component";
+import { CommonModule } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
+
+import { DatePipe, registerLocaleData } from '@angular/common';
+import { Entry } from '../../model/entry.model';
+registerLocaleData(localeEs, 'es');
 
 @Component({
     selector: 'app-entry',
     standalone: true,
     templateUrl: './entry.component.html',
     styleUrl: './entry.component.css',
-    imports: [MatButtonModule, MatIconModule, ActionButtonComponent]
+    providers: [{provide: LOCALE_ID, useValue: 'es'}, DatePipe],
+    imports: [MatButtonModule, MatIconModule, ActionButtonComponent, CommonModule]
 })
 export class EntryComponent {
   
   @Output() executedMethod = new EventEmitter<void>();
-  
-  constructor(private route: ActivatedRoute) { }
+  @Input() entry?: Entry;
+  fechaDate = new Date();
 
-  title = "Miércoles, 12 de mayo de 2021"
-  content = "Hoy fue un día bastante movido, pero productivo. Empecé la mañana yendo al entrenamiento, como de costumbre, seguido de un desayuno sano para recargar energías. Luego tuve una reunión con Michael para discutir algunos detalles del proyecto en el que estamos trabajando.\n\nDespués de la reunión, nos reunimos todo el equipo para hacer la retrospectiva del sprint 5. Fue genial poder analizar lo que hicimos bien y en qué podemos mejorar para el próximo sprint. Luego me dediqué a depurar el código de la feature 5.2, un trabajo tedioso pero necesario.\n\nPor último, saqué a los perros a pasear y disfruté de un rato al aire libre. Aunque no pude almorzar con mis primos ni cenar quesadillas como había planeado, al menos pude cumplir con las tareas más importantes del día.\n\nMañana será otro día lleno de actividades, pero por ahora, me siento satisfecho con lo que logré hoy. ¡Hasta mañana!";
+  
   disabledEntry = true;
   buttonText = "EDITAR";
+  hasEntry= false;
 
+  constructor(private datePipe: DatePipe) { }
+  
   ngOnInit() {
+    let date = localStorage.getItem("selectedDate");
+    this.fechaDate = new Date(date? date : '');
   }
 
   enableEditOrSaveEntry() {
@@ -34,6 +44,18 @@ export class EntryComponent {
       this.buttonText = "EDITAR";
     }
     this.executedMethod.emit();
+  }
+
+  obtenerFechaFormateada() {
+    const fechaDate = new Date(this.fechaDate);
+    const formattedDate = this.datePipe.transform(fechaDate, 'EEEE, d \'de\' MMMM \'de\' y', 'es-ES');
+
+    if(formattedDate) {
+      let finalDate = formattedDate.charAt(0).toUpperCase() + formattedDate?.slice(1);
+      return finalDate;
+    }
+    
+    return '';
   }
 
 }

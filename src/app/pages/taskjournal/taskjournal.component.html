@@ -3,20 +3,21 @@
 </section>
 
 <section>
-    <mat-tab-group [selectedIndex]="0" >
+    <p>{{selectedTab}}</p>
+    <mat-tab-group [selectedIndex]="selectedTab" >
         <mat-tab label="Tareas" >
             <ng-template mat-tab-label>
                 <mat-icon class="taskjournal-tab-icon">checklist</mat-icon>
-                Tareas
+                Actividades
             </ng-template>
-            <app-tasklist></app-tasklist>
+            <app-tasklist (entryCreated)="createEntryProcess($event)"></app-tasklist>
         </mat-tab>
         <mat-tab label="Diario">
             <ng-template mat-tab-label>
                 <mat-icon class="taskjournal-tab-icon">menu_book</mat-icon>
                 Diario
             </ng-template>
-            <app-journal></app-journal>            
+            <app-journal [entry]="entryForJournal"></app-journal>            
         </mat-tab>
     </mat-tab-group>
 </section>

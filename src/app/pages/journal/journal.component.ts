@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { EntryComponent } from "../../components/entry/entry.component";
+import { Entry } from '../../model/entry.model';
 
 @Component({
     selector: 'app-journal',
@@ -9,5 +10,6 @@ import { EntryComponent } from "../../components/entry/entry.component";
     imports: [EntryComponent]
 })
 export class JournalComponent {
+    @Input() entry?: Entry;
 
 }

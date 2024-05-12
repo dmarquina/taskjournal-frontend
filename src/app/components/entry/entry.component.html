@@ -1,13 +1,26 @@
 <section class="flex flex-wrap justify-center mt-5">
     <section class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 mx-4 justify-center">
-        <section>
-            <h3 class="text-teal-600 italic">{{title}}</h3>
+        
+        <section *ngIf="entry!=null; else elseBlock">
+            <section>
+                <h3 class="text-teal-600 italic">{{ obtenerFechaFormateada() }}</h3>
+            </section>
+            <form class="w-full">
+                <textarea id="message" rows="24" class="edit-entry-container" [class.bg-gray-200] = "disabledEntry" placeholder="" [disabled]="disabledEntry">{{entry?.content}}</textarea>
+            </form>
+            <section class="mt-8">
+                <app-actionbutton [buttonText] = buttonText (click) = "enableEditOrSaveEntry()"></app-actionbutton>
+            </section>
         </section>
-        <form class="w-full">
-            <textarea id="message" rows="24" class="edit-entry-container" [class.bg-gray-200] = "disabledEntry" placeholder="" [disabled]="disabledEntry">{{content}}</textarea>
-        </form>
-        <section class="mt-8">
-            <app-actionbutton [buttonText] = buttonText (click) = "enableEditOrSaveEntry()"></app-actionbutton>
-        </section>
+
+        <ng-template #elseBlock>
+            <section class="w-full text-center mt-40">
+                <mat-icon fontIcon="self_improvement" class="h-auto w-auto text-9xl text-gray-300"></mat-icon>
+                <h2 class="text-gray-400">Cierra el día en tu lista de actividades para poder contar la historia de hoy</h2>
+                <h3 class="text-gray-400">Recuerda que no es necesario haber completado todo</h3>
+            </section>
+            
+        </ng-template>
+
     </section>
 </section>

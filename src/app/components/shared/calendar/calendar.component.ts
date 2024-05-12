@@ -25,6 +25,8 @@ export class CalendarComponent {
   
   ngOnInit() {
     this.getDate({ value: this.selected }); 
+    localStorage.setItem('selectedDate', this.selected.toDateString() );
+    console.log(this.selected.toDateString());
   }
 
   getDate(event: any) {

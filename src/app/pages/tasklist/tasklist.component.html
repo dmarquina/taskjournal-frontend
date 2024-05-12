@@ -1,4 +1,4 @@
 <section class="mt-5">
-    <app-task></app-task>
-    <app-actionbutton [buttonText] = "buttonText"></app-actionbutton>
+    <app-task [tasks] = tasks></app-task>
+    <app-actionbutton [buttonText] = "buttonText" (click) = createEntry()></app-actionbutton>
 </section>
