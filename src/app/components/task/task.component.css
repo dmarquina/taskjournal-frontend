@@ -46,7 +46,7 @@
     position: relative;
     margin: 0;
     width: 100%;
-    font-size: 24px;
+    font-size: 20px;
     font-family: inherit;
     font-weight: inherit;
     line-height: 1.4em;
@@ -118,7 +118,7 @@
   
   .todo-list li {
     position: relative;
-    font-size: 24px;
+    font-size: 20px;
     border-bottom: 1px solid #ededed;
     padding: 0rem 1rem;
   }
@@ -200,7 +200,7 @@
     width: 40px;
     height: 40px;
     margin: auto 0;
-    font-size: 30px;
+    font-size: 24px;
     color: #949494;
     transition: color 0.2s ease-out;
   }

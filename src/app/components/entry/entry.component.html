@@ -1,10 +1,13 @@
-<section class="flex flex-wrap justify-center mt-10">
-    <section class="w-1/2 justify-center text-center">
-        <h1 class="text-teal-500 w-full">10 Mayo, 2024</h1>
-        <h1 class="text-gray-400 w-full">VIERNES</h1>
-
+<section class="flex flex-wrap justify-center mt-5">
+    <section class="w-full md:w-1/2 lg:w-1/2 xl:w-1/2 mx-4 justify-center">
+        <section>
+            <h3 class="text-teal-600 italic">{{title}}</h3>
+        </section>
         <form class="w-full">
-            <textarea id="message" rows="24" class="edit-entry-container" placeholder="">{{content}}</textarea>
+            <textarea id="message" rows="24" class="edit-entry-container" [class.bg-gray-200] = "disabledEntry" placeholder="" [disabled]="disabledEntry">{{content}}</textarea>
         </form>
+        <section class="mt-8">
+            <app-actionbutton [buttonText] = buttonText (click) = "enableEditOrSaveEntry()"></app-actionbutton>
+        </section>
     </section>
 </section>
