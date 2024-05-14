@@ -5,6 +5,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
+import { DateSelectionService } from '../../../services/calendar.service';
 
 @Component({
   selector: 'app-calendar',
@@ -18,11 +19,14 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './calendar.component.css'
 })
 export class CalendarComponent {
+
   selected: Date = new Date();
   @ViewChild('picker') picker!: MatDatepicker<Date>;
   selectedDay: string = '';
 
-  
+  constructor(private dateSelectionService: DateSelectionService) {}
+
+    
   ngOnInit() {
     this.getDate({ value: this.selected }); 
     localStorage.setItem('selectedDate', this.selected.toDateString() );
@@ -31,7 +35,8 @@ export class CalendarComponent {
 
   getDate(event: any) {
     this.selected = event.value;
-    
+    this.dateSelectionService.setSelectedDate(this.selected);
+
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);

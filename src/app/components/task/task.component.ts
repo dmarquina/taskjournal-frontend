@@ -1,14 +1,16 @@
 import { Component, Input, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../services/task.service';
+import { DateSelectionService } from '../../services/calendar.service';
 
 @Component({
     selector: 'app-task',
     standalone: true,
     styleUrl: './task.component.css',
     templateUrl: './task.component.html',
+    providers: [DatePipe],
     imports: [ReactiveFormsModule, CommonModule]
 })
 
@@ -17,7 +19,8 @@ export class TaskComponent {
   @Input({required: true}) tasks = signal<Task[]>([]);
   
   private taskService = inject(TaskService);
-  
+  currentDate: Date = new Date();
+
   newTaskCtrl = new FormControl('', {
     nonNullable: true,
     validators: [
@@ -27,6 +30,14 @@ export class TaskComponent {
     ]
   })
 
+
+  constructor(private dateSelectionService: DateSelectionService, private datePipe: DatePipe) { }
+  
+  ngOnInit() {
+    this.dateSelectionService.selectedDate$.subscribe(date => {
+      this.currentDate = date;
+    });
+  }
 
   changeHandler() {
     if (this.newTaskCtrl.valid) {
@@ -42,6 +53,7 @@ export class TaskComponent {
     const createTaskRequest = {
       userId: 1,
       name: name,
+      createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
     }
     this.taskService.createTask(createTaskRequest).subscribe({
       next: (tasks) => {

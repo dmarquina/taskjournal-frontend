@@ -6,63 +6,81 @@ import { Task } from '../../model/task.model';
 import { TaskService } from '../../services/task.service';
 import { EntryService } from '../../services/entry.service';
 import { Entry } from '../../model/entry.model';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonModule } from '@angular/common';
+import { DateSelectionService } from '../../services/calendar.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
-    selector: 'app-tasklist',
-    standalone: true,
-    templateUrl: './tasklist.component.html',
-    styleUrl: './tasklist.component.css',
-    imports: [CalendarComponent, TaskComponent, ActionButtonComponent]
+  selector: 'app-tasklist',
+  standalone: true,
+  templateUrl: './tasklist.component.html',
+  styleUrl: './tasklist.component.css',
+  providers: [DatePipe],
+  imports: [CalendarComponent, TaskComponent, ActionButtonComponent, MatProgressSpinnerModule, CommonModule]
 })
 
 export class TaskListComponent {
-    @Output() entryCreated = new EventEmitter<Entry>();
-    
-    private taskService = inject(TaskService);
-    private entryService = inject(EntryService);
-    entry = signal<Entry | null>(null);
+  @Output() entryCreated = new EventEmitter<Entry>();
 
-    buttonText = "CERRAR DIA";
-    tasks = signal<Task[]>([]);
+  private taskService = inject(TaskService);
+  private entryService = inject(EntryService);
 
-    ngOnInit() {
-        this.getTasks();
+  currentDate: Date = new Date();
+  entry = signal<Entry | null>(null);
+  tasks = signal<Task[]>([]);
+
+  buttonText = "CERRAR DIA";
+  isLoading = false;
+
+  constructor(private dateSelectionService: DateSelectionService, private datePipe: DatePipe) { }
+
+
+  ngOnInit() {
+    this.getTasks();
+    this.dateSelectionService.selectedDate$.subscribe(date => {
+      this.currentDate = date;
+    });
+  }
+
+  private getTasks() {
+    this.taskService.getTasks().subscribe({
+      next: (tasks) => {
+        this.tasks.set(tasks)
+      },
+      error: () => { console.log("Error en updateTask") }
+    })
+  }
+
+  createEntry() {
+    this.isLoading = true;
+    const createEntryRequest = {
+      userId: 1,
+      taskIds: this.obtenerTaskIds(),
+      createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
     }
 
-      
-    private getTasks() {
-        this.taskService.getTasks().subscribe({
-          next: (tasks) => {
-            this.tasks.set(tasks)
-          },
-          error: () => { console.log("Error en updateTask") }
-        })
-    }
-      
-    createEntry() {
-        const createEntryRequest = {
-            userId: 1,
-            taskIds: this.obtenerTaskIds(),
-        }
+    console.log(createEntryRequest);
+    this.entryService.createEntry(createEntryRequest).subscribe({
+      next: (entry) => {
+        this.entry.set(entry);
+        this.entryCreated.emit(entry);
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 400);
 
-        this.entryService.createEntry(createEntryRequest).subscribe({
-          next: (entry) => {
-            this.entry.set(entry);
-            this.entryCreated.emit(entry);
-          },
-          error: () => { console.log("Error en createEntry") }
-        })
-    }
+      },
+      error: () => { console.log("Error en createEntry") }
+    })
+  }
 
-    private obtenerTaskIds() : number[]{
-        let ids:number[] = []
-        this.tasks.update((tasks) => {
-            ids = tasks.map(task => task.taskId);
-            return tasks;
-          });
-        return ids;
-    }
-
-
+  private obtenerTaskIds(): number[] {
+    let ids: number[] = []
+    this.tasks.update((tasks) => {
+      ids = tasks.map(task => task.taskId);
+      return tasks;
+    });
+    return ids;
+  }
 
 }

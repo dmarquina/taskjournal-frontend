@@ -6,7 +6,7 @@
                 <h3 class="text-teal-600 italic">{{ obtenerFechaFormateada() }}</h3>
             </section>
             <form class="w-full">
-                <textarea id="message" rows="24" class="edit-entry-container" [class.bg-gray-200] = "disabledEntry" placeholder="" [disabled]="disabledEntry">{{entry?.content}}</textarea>
+                <textarea id="message" rows="24" class="edit-entry-container" [class.bg-gray-200] = "disabledEntry" placeholder="" [disabled]="disabledEntry">{{entry.content}}</textarea>
             </form>
             <section class="mt-8">
                 <app-actionbutton [buttonText] = buttonText (click) = "enableEditOrSaveEntry()"></app-actionbutton>
