@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Task } from '../model/task.model';
 
@@ -13,8 +13,11 @@ export class TaskService {
 
   }
 
-  getTasks() {
-    return this.http.get<Task[]>('http://localhost:8080/users/1/tasks');
+  getTasks(userId: number, createdAt: string) {
+    let params = new HttpParams()
+      .set('userId', userId.toString())
+      .set('createdAt', createdAt);
+      return this.http.get<Task[]>('http://localhost:8080/tasks/', { params });
   }
 
   createTask(createTaskRequest: Object) {

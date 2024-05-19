@@ -40,15 +40,18 @@ export class TaskListComponent {
     this.getTasks();
     this.dateSelectionService.selectedDate$.subscribe(date => {
       this.currentDate = date;
+      this.getTasks();
     });
   }
 
   private getTasks() {
-    this.taskService.getTasks().subscribe({
+    let createdAt =  this.datePipe.transform(this.currentDate, 'yyyy-MM-dd') ?? '';
+
+    this.taskService.getTasks(1, createdAt).subscribe({
       next: (tasks) => {
         this.tasks.set(tasks)
       },
-      error: () => { console.log("Error en updateTask") }
+      error: () => { console.log("Error en getTask") }
     })
   }
 

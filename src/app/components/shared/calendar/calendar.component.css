@@ -1,6 +1,39 @@
 
-button.example-custom-date-class {
-    background: orange;
-    border-radius: 100%;
+button.gold-class {
+  background: orange; /* Gradiente dorado */
+  border-radius: 50%; /* Hacer que el botón sea redondo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
   }
   
+button.silver-class {
+  background: linear-gradient(135deg, #C0C0C0, #A9A9A9); /* Gradiente plateado */
+  border-radius: 50%; /* Hacer que el botón sea redondo */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  
+  }
+  
+.trophy{
+  width: 50px;
+  height: 50px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}

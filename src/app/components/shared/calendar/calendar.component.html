@@ -1,7 +1,7 @@
 <div class=" flex flex-row justify-center">
     <mat-form-field class="example-full-width " style="width:1px;visibility:hidden;">
         <input matInput (dateInput)="getDate($event)" [matDatepicker]="picker">
-        <mat-datepicker [dateClass]="dateClass" touchUi #picker ></mat-datepicker>
+        <mat-datepicker [dateClass]="dateClass" touchUi #picker></mat-datepicker>
     </mat-form-field>
     <button mat-stroked-button class="basis-1/2 rounded-full" color="primary" (click)="openPicker()">{{ selectedDay }}</button>
 </div>

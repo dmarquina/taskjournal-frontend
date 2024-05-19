@@ -21,8 +21,6 @@ export class EntryComponent {
   
   @Output() executedMethod = new EventEmitter<void>();
   @Input() entry?: Entry;
-  fechaDate = new Date();
-
   
   disabledEntry = true;
   buttonText = "EDITAR";
@@ -30,11 +28,6 @@ export class EntryComponent {
 
   constructor(private datePipe: DatePipe) { }
   
-  ngOnInit() {
-    let date = localStorage.getItem("selectedDate");
-    this.fechaDate = new Date(date? date : '');
-  }
-
   enableEditOrSaveEntry() {
     if(this.disabledEntry){
       this.disabledEntry = false;
@@ -47,11 +40,13 @@ export class EntryComponent {
   }
 
   obtenerFechaFormateada() {
-    const fechaDate = new Date(this.fechaDate);
-    const formattedDate = this.datePipe.transform(fechaDate, 'EEEE, d \'de\' MMMM \'de\' y', 'es-ES');
+    if (!this.entry || !this.entry.createdAt) {
+      return '';
+    }
+    const formattedDate = this.datePipe.transform(this.entry.createdAt, 'EEEE, d \'de\' MMMM \'de\' y', 'es-ES');
 
-    if(formattedDate) {
-      let finalDate = formattedDate.charAt(0).toUpperCase() + formattedDate?.slice(1);
+    if (formattedDate) {
+      let finalDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
       return finalDate;
     }
     
