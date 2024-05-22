@@ -7,7 +7,7 @@
     </header>
 
 
-<div class="container todoapp-wrapper">
+<div *ngIf="tasks().length > 0; else emptyBlock" class="container todoapp-wrapper">
     <section class="main" >
     <ul class="todo-list" *ngFor="let task of tasks() index as i">
         <li [class.completed]="task.completed">
@@ -20,4 +20,13 @@
     </ul>
     </section>
 </div>
+
+<ng-template #emptyBlock>
+    <section class="w-full text-center mt-20">
+        <mat-icon fontIcon="add" class="h-auto w-auto text-9xl text-gray-300"></mat-icon>
+        <h2 class="text-gray-400">Crea una nueva tarea para iniciar tu día</h2>
+        <h3 class="text-gray-400">Todo viaje empieza con el primer paso</h3>
+    </section>
+</ng-template>
+
 </section>

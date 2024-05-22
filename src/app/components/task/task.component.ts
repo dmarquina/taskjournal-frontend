@@ -4,6 +4,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Task } from '../../model/task.model';
 import { TaskService } from '../../services/task.service';
 import { DateSelectionService } from '../../services/calendar.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-task',
@@ -11,7 +12,7 @@ import { DateSelectionService } from '../../services/calendar.service';
     styleUrl: './task.component.css',
     templateUrl: './task.component.html',
     providers: [DatePipe],
-    imports: [ReactiveFormsModule, CommonModule]
+    imports: [ReactiveFormsModule, MatIconModule, CommonModule]
 })
 
 export class TaskComponent {
@@ -56,8 +57,8 @@ export class TaskComponent {
       createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
     }
     this.taskService.createTask(createTaskRequest).subscribe({
-      next: (tasks) => {
-        this.tasks.set(tasks)
+      next: (task: Task) => {
+        this.tasks.update(prevTasks => [...prevTasks, task]);
       },
       error: () => { console.log("Error en updateTask") }
     });

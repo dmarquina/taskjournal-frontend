@@ -21,7 +21,7 @@ export class TaskService {
   }
 
   createTask(createTaskRequest: Object) {
-    return this.http.post<Task[]>('http://localhost:8080/tasks/', createTaskRequest);
+    return this.http.post<Task>('http://localhost:8080/tasks/', createTaskRequest);
   }
 
   updateTaskStatus(taskId: number) {

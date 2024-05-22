@@ -1,9 +1,9 @@
-<section class="mt-5" *ngIf="!isLoading; else elseBlock">
-    <app-task [tasks] = tasks></app-task>
-    <app-actionbutton [buttonText] = "buttonText" (click) = createEntry()></app-actionbutton>
+<section class="mt-5" *ngIf="!isLoading; else loadingBlock">
+        <app-task [tasks] = tasks></app-task>
+        <app-actionbutton *ngIf="tasks().length > 0;" [buttonText] = "buttonText" (click) = createEntry()></app-actionbutton>
 </section>
 
-<ng-template #elseBlock>
+<ng-template #loadingBlock>
     <section class="flex flex-wrap justify-center text-center mt-40">
         <mat-spinner ></mat-spinner>
         <h2 class="w-full mt-10 mx-4 text-gray-400">Espera mientras creamos la nueva página de tu diario...</h2>

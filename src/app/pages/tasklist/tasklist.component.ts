@@ -63,7 +63,6 @@ export class TaskListComponent {
       createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
     }
 
-    console.log(createEntryRequest);
     this.entryService.createEntry(createEntryRequest).subscribe({
       next: (entry) => {
         this.entry.set(entry);
