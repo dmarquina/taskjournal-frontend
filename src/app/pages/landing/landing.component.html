@@ -1,0 +1,123 @@
+<section class="bg-white-500 text-teal-500 pt-3">
+    <div class="container mx-auto px-6 flex flex-col md:flex-row items-center">
+      <h3 class="text-3xl md:text-4xl font-bold text-center md:text-left">Task Journal</h3>
+    </div>
+  </section>
+
+  <!-- Main Features -->
+<section class="py-16 bg-gray-100 text-gray-500">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between">
+        <div class="text-center md:text-left mb-12 md:mb-0 md:w-1/2">
+          <h2 class="text-3xl font-semibold">Ordena y recuerda cada día de tu vida</h2>
+          <p class="text-lg text-gray-600 mt-4">Ten a la mano todas las actividades que realizarás y conviértelas automáticamente en una entrada a tu diario al final del día.</p>
+        </div>
+  
+        <div class="bg-white shadow-md rounded-lg p-8 w-full md:w-1/2 max-w-md mx-auto md:mx-0">
+          <div class="flex justify-center mb-4">
+            <button (click)="switchToLogin()" [class.bg-teal-500]="isLoginFormVisible" [class.text-white]="isLoginFormVisible" class="px-4 py-2 bg-gray-200 rounded-l-lg">Login</button>
+            <button (click)="switchToRegister()" [class.bg-teal-500]="!isLoginFormVisible" [class.text-white]="!isLoginFormVisible" class="px-4 py-2 bg-gray-200 rounded-r-lg">Registro</button>
+          </div>
+          <div *ngIf="isLoginFormVisible">
+            <h3 class="text-2xl font-bold mb-4">Login</h3>
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+              <mat-form-field class="w-full mb-4" appearance="fill">
+                <mat-label>Correo electrónico</mat-label>
+                <input matInput formControlName="email" type="email" placeholder="Correo electrónico" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                  El correo electrónico es requerido.
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+                  El correo electrónico no es válido.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full mb-4" appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput formControlName="password" type="password" placeholder="Contraseña" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                  La contraseña es requerida.
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+                  La contraseña debe tener al menos 6 caracteres.
+                </mat-error>
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="submit" class="w-full">Entrar</button>
+            </form>
+          </div>
+          <div *ngIf="!isLoginFormVisible">
+            <h3 class="text-2xl font-bold mb-4">Registro</h3>
+            <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+              <mat-form-field class="w-full mb-4" appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="firstName" type="text" placeholder="Nombre" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="registerForm.get('firstName')?.hasError('required')">
+                  El nombre es requerido.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full mb-4" appearance="fill">
+                <mat-label>Apellido</mat-label>
+                <input matInput formControlName="lastName" type="text" placeholder="Apellido" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="registerForm.get('lastName')?.hasError('required')">
+                  El apellido es requerido.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full mb-4" appearance="fill">
+                <mat-label>Correo electrónico</mat-label>
+                <input matInput formControlName="email" type="email" placeholder="Correo electrónico" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="registerForm.get('email')?.hasError('required')">
+                  El correo electrónico es requerido.
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('email')?.hasError('email')">
+                  El correo electrónico no es válido.
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-full mb-4" appearance="fill">
+                <mat-label>Contraseña</mat-label>
+                <input matInput formControlName="password" type="password" placeholder="Contraseña" [errorStateMatcher]="matcher">
+                <mat-error *ngIf="registerForm.get('password')?.hasError('required')">
+                  La contraseña es requerida.
+                </mat-error>
+                <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">
+                  La contraseña debe tener al menos 6 caracteres.
+                </mat-error>
+              </mat-form-field>
+              <button mat-raised-button color="primary" type="submit" class="w-full">Registrarse</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="py-16 bg-white text-gray-500">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-semibold">No olvides ningún día gracias a nuestra IA</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="bg-gray-100 p-8 rounded-lg shadow-md">
+          <div class="text-teal-500 mb-4">
+            <mat-icon fontIcon="library_add_check" class="h-auto w-auto text-5xl"></mat-icon>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Lista todas tus actividades</h3>
+          <p class="text-gray-600">No importa qué hora del día sea, agrega, elimina o completa cada actividad.</p>
+        </div>
+        <div class="bg-gray-100 p-8 rounded-lg shadow-md">
+          <div class="text-teal-500 mb-4">
+            <mat-icon fontIcon="post_add" class="h-auto w-auto text-5xl"></mat-icon>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Genera una entrada a tu diario</h3>
+          <p class="text-gray-600">Al finalizar el día convierte todas tus actividades (completadas o no) en una entrada a tu diario con Inteligencia Artificial.</p>
+        </div>
+        <div class="bg-gray-100 p-8 rounded-lg shadow-md">
+          <div class="text-teal-500 mb-4">
+            <mat-icon fontIcon="calendar_month" class="h-auto w-auto text-5xl"></mat-icon>
+          </div>
+          <h3 class="text-xl font-bold mb-4">Tus días pasados a tu disposición</h3>
+          <p class="text-gray-600">Usa el calendario para ver fechas pasadas en tu diario y recordar lo que hiciste cada día.</p>
+        </div>
+      </div>
+    </div>
+  </section>
