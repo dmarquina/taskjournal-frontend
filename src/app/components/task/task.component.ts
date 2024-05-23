@@ -5,6 +5,8 @@ import { Task } from '../../model/task.model';
 import { TaskService } from '../../services/task.service';
 import { DateSelectionService } from '../../services/calendar.service';
 import { MatIconModule } from '@angular/material/icon';
+import { AuthenticationService } from '../../services/authentication.service';
+import { User } from '../../model/user.model';
 
 @Component({
     selector: 'app-task',
@@ -19,7 +21,10 @@ export class TaskComponent {
 
   @Input({required: true}) tasks = signal<Task[]>([]);
   
+  private authService = inject(AuthenticationService);
   private taskService = inject(TaskService);
+
+  user?: User;
   currentDate: Date = new Date();
 
   newTaskCtrl = new FormControl('', {
@@ -38,6 +43,7 @@ export class TaskComponent {
     this.dateSelectionService.selectedDate$.subscribe(date => {
       this.currentDate = date;
     });
+    this.user = this.authService.getUser();
   }
 
   changeHandler() {
@@ -52,7 +58,7 @@ export class TaskComponent {
 
   addTask(name: string) {
     const createTaskRequest = {
-      userId: 1,
+      userId: this.user?.userId,
       name: name,
       createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
     }

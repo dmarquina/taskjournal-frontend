@@ -10,6 +10,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonModule } from '@angular/common';
 import { DateSelectionService } from '../../services/calendar.service';
 import { DatePipe } from '@angular/common';
+import { AuthenticationService } from '../../services/authentication.service';
+import { User } from '../../model/user.model';
 
 @Component({
   selector: 'app-tasklist',
@@ -25,7 +27,9 @@ export class TaskListComponent {
 
   private taskService = inject(TaskService);
   private entryService = inject(EntryService);
+  private authService = inject(AuthenticationService);
 
+  user?: User;
   currentDate: Date = new Date();
   entry = signal<Entry | null>(null);
   tasks = signal<Task[]>([]);
@@ -42,6 +46,7 @@ export class TaskListComponent {
       this.currentDate = date;
       this.getTasks();
     });
+    this.user = this.authService.getUser();
   }
 
   private getTasks() {
@@ -58,7 +63,7 @@ export class TaskListComponent {
   createEntry() {
     this.isLoading = true;
     const createEntryRequest = {
-      userId: 1,
+      userId: this.user?.userId,
       taskIds: this.obtenerTaskIds(),
       createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
     }
