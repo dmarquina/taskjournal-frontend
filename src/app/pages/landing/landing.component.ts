@@ -67,7 +67,6 @@ export class LandingComponent implements OnInit {
       const loginData = this.loginForm.value;
       this.authService.login(loginData).subscribe({
         next: (user: User) => {
-          console.log(user);
           localStorage.setItem('user', JSON.stringify(user));
           this.router.navigate(['/taskjournal']);
         },

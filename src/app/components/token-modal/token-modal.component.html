@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{message}}</h2>
+<mat-dialog-content>
+    <p>Los tokens son necesarios para crear historias a partir de tus actividades</p>
+</mat-dialog-content>
+<mat-dialog-actions class="justify-end">
+  <button mat-stroked-button (click)="onNoClick()">Cerrar</button>
+  <button mat-raised-button color="primary" cdkFocusInitial (click)="askForMoreTokens()">Solicitar más tokens</button>
+</mat-dialog-actions>
