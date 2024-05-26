@@ -26,16 +26,18 @@ export class TaskJournalComponent {
     selectedTab=0;
     user?: User;
     tokens?: number;
+    title? : string;
     
     constructor (private router: Router, public dialog: MatDialog) {}
 
     ngOnInit() {
-        this.user = this.authService.getUser();
-        this.tokens = this.user?.tokens;
+        this.setTitle();
     }
+
     createEntryProcess(entry: Entry) {
         this.selectedTab=1;
         this.entryForJournal = entry;
+        this.setTitle();
     }
 
     logout(){
@@ -43,12 +45,21 @@ export class TaskJournalComponent {
         this.router.navigate(['']);
     }
 
-  
+    setTitle() {
+        this.user = this.authService.getUser();
+        this.tokens = this.user?.tokens;
+        if (this && this.tokens !== undefined) {
+            this.title = "Tienes " + this.tokens;
+    
+            this.title += (this.tokens > 1 || this.tokens == 0 ) ? " Tokens" : " Token";
+        } else {
+            this.title = "Tienes 0 Tokens";
+        }
+    }
+
     openDialog(): void {
       const dialogRef = this.dialog.open(TokenModalComponent, {
         data: {tokens: this.tokens}
       });
-  
-
     }
 }

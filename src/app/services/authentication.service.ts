@@ -27,4 +27,10 @@ export class AuthenticationService {
   getUser(): any {
     return JSON.parse(localStorage.getItem('user') || '{}');
   }
+
+  useOneToken() {
+    let user = this.getUser();
+    user.tokens = user.tokens - 1;
+    localStorage.setItem('user' , JSON.stringify(user));
+  }
 }

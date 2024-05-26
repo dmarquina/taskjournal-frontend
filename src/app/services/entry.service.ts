@@ -23,5 +23,9 @@ export class EntryService {
   createEntry(createEntryRequest: Object) {
     return this.http.post<Entry>('http://localhost:8080/entries/', createEntryRequest);
   }
+  
+  updateEntry(updateEntryRequest: Object) {
+    return this.http.put<Entry>('http://localhost:8080/entries/', updateEntryRequest);
+  }
 
 }

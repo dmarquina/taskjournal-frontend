@@ -12,6 +12,8 @@ import { DateSelectionService } from '../../services/calendar.service';
 import { DatePipe } from '@angular/common';
 import { AuthenticationService } from '../../services/authentication.service';
 import { User } from '../../model/user.model';
+import { TokenModalComponent } from '../../components/token-modal/token-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-tasklist',
@@ -34,10 +36,10 @@ export class TaskListComponent {
   entry = signal<Entry | null>(null);
   tasks = signal<Task[]>([]);
 
-  buttonText = "CERRAR DIA";
+  buttonText = "CREAR HISTORIA";
   isLoading = false;
 
-  constructor(private dateSelectionService: DateSelectionService, private datePipe: DatePipe) { }
+  constructor(private dateSelectionService: DateSelectionService, private datePipe: DatePipe, public dialog: MatDialog) { }
 
 
   ngOnInit() {
@@ -61,24 +63,32 @@ export class TaskListComponent {
   }
 
   createEntry() {
-    this.isLoading = true;
-    const createEntryRequest = {
-      userId: this.user?.userId,
-      taskIds: this.obtenerTaskIds(),
-      createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
+
+    if (this.user && this.user.tokens > 0) {
+      this.isLoading = true;
+      const createEntryRequest = {
+        userId: this.user?.userId,
+        taskIds: this.obtenerTaskIds(),
+        createdAt: this.datePipe.transform(this.currentDate, 'yyyy-MM-dd')
+      }
+
+      this.entryService.createEntry(createEntryRequest).subscribe({
+        next: (entry) => {
+          this.authService.useOneToken();
+          this.user = this.authService.getUser();
+          this.entry.set(entry);
+          this.entryCreated.emit(entry);
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 400);
+
+        },
+        error: () => { console.log("Error en createEntry") }
+      })
+    } else {
+      this.openDialog();
     }
 
-    this.entryService.createEntry(createEntryRequest).subscribe({
-      next: (entry) => {
-        this.entry.set(entry);
-        this.entryCreated.emit(entry);
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 400);
-
-      },
-      error: () => { console.log("Error en createEntry") }
-    })
   }
 
   private obtenerTaskIds(): number[] {
@@ -90,4 +100,9 @@ export class TaskListComponent {
     return ids;
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(TokenModalComponent, {
+      data: {tokens: this.user?.tokens}
+    });
+  }
 }
