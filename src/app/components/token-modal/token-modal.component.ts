@@ -43,7 +43,7 @@ export class TokenModalComponent {
   }
 
   askForMoreTokens(): void {
-    window.location.href = 'https://www.instagram.com/direct/t/17849246660690199';
+    window.location.href = 'https://api.whatsapp.com/send?phone=51993390236&text=Hola,%20deseo%20más%20tokens%20para%20TaskJournal';
   }
  
   

@@ -80,7 +80,6 @@ export class CalendarComponent {
         if (!this.hasExecutedForCurrentMonth) {
           
           this.currentDaysToCheck = this.monthData.find(item => item.dateKey === key);
-          console.log(this.currentDaysToCheck);
 
           this.hasExecutedForCurrentMonth = true;
         }

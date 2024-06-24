@@ -1,21 +1,21 @@
 
 button.gold-class {
-  background: orange; /* Gradiente dorado */
-  border-radius: 50%; /* Hacer que el botón sea redondo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: #009688;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 18px;
   color: white;
   cursor: pointer;
   }
   
 button.silver-class {
-  background: linear-gradient(135deg, #C0C0C0, #A9A9A9); /* Gradiente plateado */
-  border-radius: 50%; /* Hacer que el botón sea redondo */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  background:  #bdbdbd;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12); 
   border: none;
   display: flex;
   justify-content: center;
@@ -26,6 +26,11 @@ button.silver-class {
   
   }
   
+.gold-class > .mat-calendar-body-cell-content {
+    color: white !important;
+}
+
+
 .trophy{
   width: 50px;
   height: 50px;

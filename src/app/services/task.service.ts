@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Task } from '../model/task.model';
+import { environment } from '../../environments/enviroment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,27 +9,27 @@ import { Task } from '../model/task.model';
 export class TaskService {
 
   private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
+  private tasksEndpoint = `${this.apiUrl}/tasks/`;
 
-  constructor() {
-
-  }
+  constructor() {}
 
   getTasks(userId: number, createdAt: string) {
     let params = new HttpParams()
       .set('userId', userId.toString())
       .set('createdAt', createdAt);
-      return this.http.get<Task[]>('http://localhost:8080/tasks/', { params });
+      return this.http.get<Task[]>(this.tasksEndpoint, { params });
   }
 
   createTask(createTaskRequest: Object) {
-    return this.http.post<Task>('http://localhost:8080/tasks/', createTaskRequest);
+    return this.http.post<Task>(this.tasksEndpoint, createTaskRequest);
   }
 
   updateTaskStatus(taskId: number) {
-    return this.http.patch<Task>('http://localhost:8080/tasks/' + taskId,{});
+    return this.http.patch<Task>(this.tasksEndpoint + taskId,{});
   }
 
   deleteTask(taskId: number) {
-    return this.http.delete('http://localhost:8080/tasks/' + taskId,{});
+    return this.http.delete(this.tasksEndpoint + taskId,{});
   }
 }

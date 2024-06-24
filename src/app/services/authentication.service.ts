@@ -13,11 +13,11 @@ export class AuthenticationService {
   constructor() { }
 
   login(loginRequest: Object) {
-    return this.http.post<User>('http://localhost:8080/users/auth', loginRequest);
+    return this.http.post<User>('http://18.220.170.17:8080/users/auth', loginRequest);
   }
 
   createUser(createUserRequest: Object) {
-    return this.http.post<User>('http://localhost:8080/users/', createUserRequest);
+    return this.http.post<User>('http://18.220.170.17:8080/users/', createUserRequest);
   }
 
   isLoggedIn(): boolean {
