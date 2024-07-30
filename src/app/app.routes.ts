@@ -5,7 +5,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
-    { path: '', component: LandingComponent }, // Ruta principal
+    { path: '', component: LandingComponent },
     { path: 'taskjournal', component: TaskJournalComponent, canActivate: [AuthGuard] },
     { path: '**', redirectTo: '' }
 ];
