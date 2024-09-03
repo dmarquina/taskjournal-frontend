@@ -32,6 +32,7 @@ export class JournalComponent {
     private getEntry() {
         let createdAt =  this.datePipe.transform(this.currentDate, 'yyyy-MM-dd') ?? '';
     
+        //TODO: cambiar userID
         this.entryService.getEntry(1, createdAt).subscribe({
           next: (entry) => {
             this.entry = entry;

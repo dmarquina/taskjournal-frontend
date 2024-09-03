@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import { MatCalendarCellClassFunction, MatDatepicker, MatDatepickerModule } from '@angular/material/datepicker';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MAT_DATE_LOCALE, provideNativeDateAdapter} from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { DateSelectionService } from '../../../services/calendar.service';
 import { MonthData } from '../../../model/monthdata.model';
@@ -24,6 +24,7 @@ export class CalendarComponent {
   selected: Date = new Date();
   @ViewChild('picker') picker!: MatDatepicker<Date>;
   selectedDay: string = '';
+  isGoldDate: boolean = false;
 
   private hasExecutedForCurrentMonth: boolean = false;
   private currentMonth: number = -1;
@@ -43,6 +44,8 @@ export class CalendarComponent {
     this.selected = event.value;
     this.dateSelectionService.setSelectedDate(this.selected);
 
+    this.checkIfGoldDate();
+    
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
@@ -105,6 +108,15 @@ export class CalendarComponent {
     }
     return '';
   };
+
+  checkIfGoldDate() {
+    if (this.currentDaysToCheck) {
+      const date = this.selected.getDate();
+      this.isGoldDate = this.currentDaysToCheck.gold?.includes(date) || false;
+    } else {
+      this.isGoldDate = false;
+    }
+  }
 
   openPicker() {
     this.picker.open();

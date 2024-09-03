@@ -35,7 +35,7 @@ export class TokenModalComponent {
   }
 
   setContentMessage() {
-    this.message = this.data.tokens> 0 ? `Aún tienes ${this.data.tokens} tokens` : 'Ya no tienes tokens';
+    this.message = this.data.tokens> 0 ? `Aún tienes ${this.data.tokens} créditos` : 'Ya no tienes créditos';
   }
 
   onNoClick(): void {

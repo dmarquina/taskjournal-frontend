@@ -63,7 +63,7 @@ export class TaskListComponent {
   }
 
   createEntry() {
-
+    //TODO: Revisar que tenga mas de 3 actividades antes de crear una historia
     if (this.user && this.user.tokens > 0) {
       this.isLoading = true;
       const createEntryRequest = {

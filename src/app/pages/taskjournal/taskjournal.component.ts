@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TaskListComponent } from "../tasklist/tasklist.component";
 import { JournalComponent } from "../journal/journal.component";
 import { CalendarComponent } from "../../components/shared/calendar/calendar.component";
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatIconModule} from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
 import { Entry } from '../../model/entry.model';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,26 +17,33 @@ import { AuthenticationService } from '../../services/authentication.service';
     standalone: true,
     templateUrl: './taskjournal.component.html',
     styleUrl: './taskjournal.component.css',
-    imports: [TaskListComponent, JournalComponent, CalendarComponent,MatTabsModule,MatIconModule]
+    imports: [TaskListComponent, JournalComponent, CalendarComponent, CommonModule, MatTabsModule, MatIconModule]
 })
 export class TaskJournalComponent {
+    @ViewChild(CalendarComponent) calendarComponent!: CalendarComponent;
 
     private authService = inject(AuthenticationService);
     
     entryForJournal?: Entry;
-    selectedTab=0;
     user?: User;
     tokens?: number;
     title? : string;
-    
-    constructor (private router: Router, public dialog: MatDialog) {}
+    isGoldDate: boolean = false;
+
+    ngAfterViewInit() {
+        if (this.calendarComponent) {
+            this.isGoldDate = this.calendarComponent.isGoldDate;
+            this.cdr.detectChanges();  // Fuerza la detección de cambios
+        }
+    }
+
+    constructor (private router: Router, public dialog: MatDialog, private cdr: ChangeDetectorRef) {}
 
     ngOnInit() {
         this.setTitle();
     }
 
     createEntryProcess(entry: Entry) {
-        this.selectedTab=1;
         this.entryForJournal = entry;
         this.setTitle();
     }
@@ -51,9 +59,9 @@ export class TaskJournalComponent {
         if (this && this.tokens !== undefined) {
             this.title = "Tienes " + this.tokens;
     
-            this.title += (this.tokens > 1 || this.tokens == 0 ) ? " Tokens" : " Token";
+            this.title += (this.tokens > 1 || this.tokens == 0 ) ? " Créditos" : " Crédito";
         } else {
-            this.title = "Tienes 0 Tokens";
+            this.title = "Tienes 0 Créditos";
         }
     }
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Task } from '../model/task.model';
-import { environment } from '../../environments/enviroment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,10 +23,6 @@ export class TaskService {
 
   createTask(createTaskRequest: Object) {
     return this.http.post<Task>(this.tasksEndpoint, createTaskRequest);
-  }
-
-  updateTaskStatus(taskId: number) {
-    return this.http.patch<Task>(this.tasksEndpoint + taskId,{});
   }
 
   deleteTask(taskId: number) {

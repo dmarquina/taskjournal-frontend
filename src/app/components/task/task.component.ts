@@ -70,25 +70,6 @@ export class TaskComponent {
     });
   }
 
-  updateTask(taskId: number, currentPos: number) {
-    this.taskService.updateTaskStatus(taskId).subscribe({
-      next: () => {
-        this.tasks.update(prevState => {
-          return prevState.map((task, position) => {
-            if (position === currentPos) {
-              return {
-                ...task,
-                completed: !task.completed
-              }
-            }
-            return task;
-          })
-        });
-      },
-      error: () => { console.log("Error en updateTask") }
-    })
-
-  }
 
   deleteTask(taskId: number, index: number): void {
     this.taskService.deleteTask(taskId).subscribe({
